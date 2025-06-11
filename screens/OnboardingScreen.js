@@ -10,6 +10,7 @@ import {
   FlatList,
 } from "react-native";
 import { useFonts } from "expo-font";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const { width } = Dimensions.get("window");
 
@@ -34,12 +35,13 @@ const slides = [
   },
 ];
 
-const OnboardingScreen = () => {
+const OnboardingScreen = ({navigation}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
 
   const [fontsLoaded] = useFonts({
     "Baloo2-Bold": require("../assets/fonts/Baloo2-Bold.ttf"),
+    "Baloo2-SemiBold": require("../assets/fonts/Baloo2-SemiBold.ttf"),
     "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
   });
 
@@ -62,6 +64,14 @@ const OnboardingScreen = () => {
       <Text style={styles.description}>{item.description}</Text>
     </View>
   );
+  const Stack = createNativeStackNavigator();
+  const StackNavigator = () => {
+    return(
+      <Stack.Navigator initialRouteName="Onboarding" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Create" component={CreateAccount} screenOptions={{ headerShown: false }}/>
+        <Stack.Screen name="Login" component={Login} screenOptions={{ headerShown: false }}/>
+      </Stack.Navigator>
+    );}
 
   return (
     <View style={styles.container}>
@@ -95,12 +105,17 @@ const OnboardingScreen = () => {
 
       {/* Button at the bottom */}
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={() => { 
+          navigation.navigate("Create")  // Navigate to Create Account screen
+        }}>
           <Text style={styles.buttonText}>Create Account</Text>
         </Pressable>
       </View>
       <View style={styles.base}>
-        <Text style={styles.basetxt}>Already Have an Account</Text>
+        <Text style={styles.basetxt} 
+        onPress={() => { 
+          navigation.navigate("Login")  // Navigate to Create Account screen
+        }}>Already Have an Account</Text>
       </View>
 
     </View>
@@ -180,7 +195,7 @@ const styles = StyleSheet.create({
   }
     , basetxt: {
         color: "#6C5DD3",
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: "Baloo2-Medium",
     }
 });
