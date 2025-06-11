@@ -44,7 +44,6 @@ const OnboardingScreen = ({navigation}) => {
     "Baloo2-SemiBold": require("../assets/fonts/Baloo2-SemiBold.ttf"),
     "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
   });
-
   const viewabilityConfig = {
     viewAreaCoveragePercentThreshold: 50,
   };
