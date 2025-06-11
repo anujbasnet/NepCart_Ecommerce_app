@@ -1,12 +1,19 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
-const CreateAccount = ({navigation}) => {
-
-    const [showpassword, setshowpassword] = useState(true);
-    const togglePasswordVisibility = () => {
-        setshowpassword(!showpassword);
-    }
+const CreateAccount = ({ navigation }) => {
+  const [showpassword, setshowpassword] = useState(true);
+  const togglePasswordVisibility = () => {
+    setshowpassword(!showpassword);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Create Account</Text>
@@ -29,7 +36,7 @@ const CreateAccount = ({navigation}) => {
           spellCheck={false}
         />
       </View>
-      
+
       <Text style={styles.username}>Email or Phone Number</Text>
       <View style={styles.inputcontainer}>
         <AntDesign
@@ -47,7 +54,7 @@ const CreateAccount = ({navigation}) => {
           spellCheck={false}
         />
       </View>
-      
+
       <Text style={styles.username}>Password</Text>
       <View style={styles.inputcontainer}>
         <AntDesign
@@ -65,29 +72,53 @@ const CreateAccount = ({navigation}) => {
           secureTextEntry={showpassword}
         />
         <TouchableOpacity onPress={togglePasswordVisibility}>
-            <AntDesign
-                style={{ marginRight: "5%" }}
-                name={showpassword ? "eyeo" : "eye"}
-                size={24}
-                color="#777"
-            />
+          <AntDesign
+            style={{ marginRight: "5%" }}
+            name={showpassword ? "eyeo" : "eye"}
+            size={24}
+            color="#777"
+          />
         </TouchableOpacity>
       </View>
-       <View style={styles.buttonContainer}>
-              <Pressable style={styles.button} onPress={() => { 
-
-              }}>
-                <Text style={styles.buttonText}>Create Account</Text>
-              </Pressable>
-              <Text style={styles.headertext}>Or using other method</Text>
-            </View>
-         <Image
-          source={require("../assets/images/Signupwithgoogle.png")}
-          style={{ marginHorizontal: "5%", height: "5%", width: "90%", marginTop: 20,borderRadius: 20 }}
-         onPress={() => {
-//To be implemented later
-         }}
-         />
+      <View style={styles.buttonContainer}>
+        <Pressable style={styles.button} onPress={() => {}}>
+          <Text style={styles.buttonText}>Create Account</Text>
+        </Pressable>
+        <Text style={styles.headertext}>Or using other method</Text>
+      </View>
+      <Image
+        source={require("../assets/images/Signupwithgoogle.png")}
+        style={{
+          marginHorizontal: "20%",
+          height: "5%",
+          width: "60%",
+          marginTop: 20,
+          borderRadius: 20,
+        }}
+        onPress={() => {
+          //To be implemented later
+        }}
+      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          marginHorizontal: "5%",
+          marginLeft: "10%",
+          gap: 10,
+          marginTop: "1%",
+        }}
+        onPress={() => {
+          //To be implemented later
+        }}
+      >
+        <Image
+          source={require("../assets/images/FacebookIcon.png")}
+          style={{ width: "10%", height: "90%",marginTop: 15 }}
+        />
+        <Text style={styles.facebooklogin}>Sign up with Facebook</Text>
+      </View>
     </View>
   );
 };
@@ -150,5 +181,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 22,
     fontFamily: "Baloo2-Medium",
+  },
+  facebooklogin: {
+    fontSize: 21,
+    fontWeight: "bold",
+    color: "#444",
+    fontFamily: "Baloo2-Medium",
+    textAlign: "center",
+    marginTop: 20,
   },
 });
