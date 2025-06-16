@@ -6,188 +6,237 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import axios from "axios";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+const { width, height } = Dimensions.get("window");
+
 const CreateAccount = ({ navigation }) => {
-  const [showpassword, setshowpassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(true);
+
   const togglePasswordVisibility = () => {
-    setshowpassword(!showpassword);
+    setShowPassword(!showPassword);
   };
+  const [Username, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const baseURL = "http://192.168.1.4:3000";
+
+// to be done later
+const postdata = async () => {
+  try {
+     await axios.post(`${baseURL}/users`, {
+      username: Username,
+      email: Email,
+      password: Password,
+    });
+    setUsername("");
+    setEmail("");
+    setPassword("");
+  } catch (err) {
+    console.log(err);
+    alert("Error submitting data");
+  }
+};
+         
+    
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Create Account</Text>
-      <Text style={styles.headertext}>
-        Start learning with create your account
-      </Text>
-      <Text style={styles.username}>Username</Text>
-      <View style={styles.inputcontainer}>
-        <AntDesign
-          style={{ marginLeft: "5%" }}
-          name="user"
-          size={24}
-          color="#777"
-        />
-        <Text>{"  "}</Text>
-        <TextInput
-          placeholder="Create your username"
-          style={styles.input}
-          autoCorrect={false}
-          spellCheck={false}
-        />
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.container}>
+          <Text style={styles.header}>Create Account</Text>
+          <Text style={styles.headerText}>
+            Start learning by creating your account
+          </Text>
 
-      <Text style={styles.username}>Email or Phone Number</Text>
-      <View style={styles.inputcontainer}>
-        <AntDesign
-          style={{ marginLeft: "5%" }}
-          name="mail"
-          size={24}
-          color="#777"
-        />
-        <Text>{"  "}</Text>
-        <TextInput
-          placeholder="Enter your email or phone number"
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-          spellCheck={false}
-        />
-      </View>
+          <Text style={styles.label}>Username</Text>
+          <View style={styles.inputContainer}>
+            <AntDesign name="user" size={20} color="#777" />
+            <TextInput
+              placeholder="Create your username"
+              style={styles.input}
+              autoCorrect={false}
+              spellCheck={false}
+              value={Username}
+              onChangeText={(text) => setUsername(text)}
+            />
+          </View>
 
-      <Text style={styles.username}>Password</Text>
-      <View style={styles.inputcontainer}>
-        <AntDesign
-          style={{ marginLeft: "5%" }}
-          name="lock"
-          size={24}
-          color="#777"
-        />
-        <Text>{"  "}</Text>
-        <TextInput
-          placeholder="Create your password"
-          style={styles.input}
-          autoCorrect={false}
-          spellCheck={false}
-          secureTextEntry={showpassword}
-        />
-        <TouchableOpacity onPress={togglePasswordVisibility}>
-          <AntDesign
-            style={{ marginRight: "5%" }}
-            name={showpassword ? "eyeo" : "eye"}
-            size={24}
-            color="#777"
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={() => {}}>
-          <Text style={styles.buttonText}>Create Account</Text>
-        </Pressable>
-        <Text style={styles.headertext}>Or using other method</Text>
-      </View>
-      <Image
-        source={require("../assets/images/Signupwithgoogle.png")}
-        style={{
-          marginHorizontal: "20%",
-          height: "5%",
-          width: "60%",
-          marginTop: 20,
-          borderRadius: 20,
-        }}
-        onPress={() => {
-          //To be implemented later
-        }}
-      />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginHorizontal: "5%",
-          marginLeft: "10%",
-          gap: 10,
-          marginTop: "1%",
-        }}
-        onPress={() => {
-          //To be implemented later
-        }}
-      >
-        <Image
-          source={require("../assets/images/FacebookIcon.png")}
-          style={{ width: "10%", height: "90%",marginTop: 15 }}
-        />
-        <Text style={styles.facebooklogin}>Sign up with Facebook</Text>
-      </View>
-    </View>
+          <Text style={styles.label}>Email or Phone Number</Text>
+          <View style={styles.inputContainer}>
+            <AntDesign name="mail" size={20} color="#777" />
+            <TextInput
+              placeholder="Enter your email or phone number"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              spellCheck={false}
+              value={Email}
+              onChangeText={(text) => setEmail(text)}
+            />
+          </View>
+
+          <Text style={styles.label}>Password</Text>
+          <View style={styles.inputContainer}>
+            <AntDesign name="lock" size={20} color="#777" />
+            <TextInput
+              placeholder="Create your password"
+              style={styles.input}
+              autoCorrect={false}
+              spellCheck={false}
+              secureTextEntry={showPassword}
+              value={Password}
+              onChangeText={(text) => setPassword(text)}
+            />
+            <TouchableOpacity onPress={togglePasswordVisibility}>
+              <AntDesign
+                name={showPassword ? "eyeo" : "eye"}
+                size={20}
+                color="#777"
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                postdata();
+                navigation.navigate("Login");
+                // Handle account creation logic here
+                // For now, you can leave this empty or add navigation if needed
+              }}
+            >
+              <Text style={styles.buttonText}>Create Account</Text>
+            </Pressable>
+            <Text style={styles.headerText}>Or sign up using</Text>
+          </View>
+
+          {/* Google Sign Up */}
+          <TouchableOpacity
+            onPress={() => console.log("Google sign up")}
+            style={styles.altAuthContainer}
+          >
+            <Image
+              source={require("../assets/images/Signupwithgoogle.png")}
+              style={styles.altAuthImage}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
+          {/* Facebook Sign Up */}
+          <TouchableOpacity
+            onPress={() => console.log("Facebook sign up")}
+            style={styles.facebookContainer}
+          >
+            <Image
+              source={require("../assets/images/FacebookIcon.png")}
+              style={styles.facebookIcon}
+              resizeMode="contain"
+            />
+            <Text style={styles.facebookText}>Sign up with Facebook</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 export default CreateAccount;
 
+// ===================== STYLES ========================
+
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingHorizontal: width * 0.05,
+    paddingTop: height * 0.08,
   },
   header: {
-    fontSize: 30,
-    paddingTop: "15%",
-    paddingLeft: "5%",
+    fontSize: 28,
     fontFamily: "Baloo2-Bold",
   },
-  headertext: {
-    fontSize: 18,
-    paddingLeft: "5%",
-    fontFamily: "Baloo2-Medium",
+  headerText: {
+    fontSize: 16,
     color: "#777",
-    marginTop: 5,
+    fontFamily: "Baloo2-Medium",
+    marginTop: 4,
   },
-  username: {
-    fontSize: 25,
-    paddingLeft: "5%",
+  label: {
+    fontSize: 20,
     fontFamily: "Baloo2-SemiBold",
-    marginTop: "7%",
+    marginTop: height * 0.03,
   },
-  inputcontainer: {
+  inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: "5%",
-    marginTop: "5%",
     backgroundColor: "#f2f2f2",
     borderRadius: 20,
-    height: "7%",
+    paddingHorizontal: 15,
+    paddingVertical: Platform.OS === "ios" ? 12 : 8,
+    marginTop: 8,
   },
   input: {
     flex: 1,
-    marginLeft: "1%",
-    fontSize: 20,
-    color: "#444",
+    fontSize: 16,
+    marginLeft: 10,
     fontFamily: "Baloo2-Medium",
+    color: "#444",
   },
   buttonContainer: {
     alignItems: "center",
-    marginTop: 30,
+    marginTop: height * 0.04,
   },
   button: {
     backgroundColor: "#6C5DD3",
-    padding: 15,
+    paddingVertical: 14,
     borderRadius: 30,
     alignItems: "center",
-    justifyContent: "center",
-    width: "80%",
+    width: "100%",
   },
   buttonText: {
     color: "#fff",
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: "Baloo2-Medium",
   },
-  facebooklogin: {
-    fontSize: 21,
-    fontWeight: "bold",
+  altAuthContainer: {
+    marginTop: height * 0.03,
+    alignItems: "center",
+  },
+  altAuthImage: {
+    width: width * 0.6,
+    height: height * 0.06,
+  },
+  facebookContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: height * 0.015,
+    gap: 10,
+  },
+  facebookIcon: {
+    width: 24,
+    height: 24,
+  },
+  facebookText: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#444",
     fontFamily: "Baloo2-Medium",
-    textAlign: "center",
-    marginTop: 20,
   },
 });

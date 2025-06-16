@@ -113,7 +113,8 @@ const OnboardingScreen = ({navigation}) => {
       <View style={styles.base}>
         <Text style={styles.basetxt} 
         onPress={() => { 
-          navigation.navigate("Login")  // Navigate to Create Account screen
+          navigation.navigate("Login") 
+           // Navigate to Create Account screen
         }}>Already Have an Account</Text>
       </View>
 
