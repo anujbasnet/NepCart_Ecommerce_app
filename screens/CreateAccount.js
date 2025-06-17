@@ -18,6 +18,7 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 const { width, height } = Dimensions.get("window");
 
+
 const CreateAccount = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(true);
 
@@ -27,7 +28,7 @@ const CreateAccount = ({ navigation }) => {
   const [Username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const baseURL = "http://192.168.1.4:3000";
+  const baseURL = "http://192.168.1.6:3000";
 
 // to be done later
 const postdata = async () => {
@@ -38,8 +39,9 @@ const postdata = async () => {
       password: Password,
     });
     setUsername("");
-    setEmail("");
+    setEmail(""); 
     setPassword("");
+    navigation.navigate("Login");
   } catch (err) {
     console.log(err);
     alert("Error submitting data");
@@ -111,8 +113,27 @@ const postdata = async () => {
             <Pressable
               style={styles.button}
               onPress={() => {
+                if (!Username || !Email || !Password) {
+                  alert("Please fill in all fields");
+                  return;
+                }
+                else if (Password.length < 6) {
+                  alert("Password must be at least 6 characters long");
+                }
+                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(Email)) {
+                  alert("Please enter a valid email address");
+                  return;
+                }
+                else if (!/^[a-zA-Z0-9]+$/.test(Username)) {
+                  alert("Username can only contain letters and numbers");
+                  return;
+                }
+                else{
                 postdata();
+                  alert("Account created successfully!");
                 navigation.navigate("Login");
+                }
+                
                 // Handle account creation logic here
                 // For now, you can leave this empty or add navigation if needed
               }}

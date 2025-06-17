@@ -3,21 +3,18 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcrypt");
+
 
 app.use(express.json());
 const users = [
-  {
-    username: "testuser",
-    email: "test123@gmail.com",
-    password: "testpassword",
-    id: 1,
-  },
 ];
-app.post("/users", (req, res) => {
-  const newUser = {
+app.post("/users", async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const newUser =  {
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password,
+    password: hashedPassword,
     id: users.length + 1,
   };
   fs.writeFileSync("Data.json", JSON.stringify([...users, newUser], null, 2));

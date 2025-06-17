@@ -1,20 +1,14 @@
 [
   {
-    "username": "testuser",
-    "email": "test123@gmail.com",
-    "password": "testpassword",
+    "username": "asfafaf",
+    "email": "asfadsajkhlh@gm.xon",
+    "password": "$2b$10$L9Byg7jDBDKVw7AikPe4xuzxM56lAVe72OLXthoQG13I5IzmuQ3s2",
     "id": 1
   },
   {
-    "username": "Auj",
-    "email": "fghsf",
-    "password": "1234545",
+    "username": "sadfad",
+    "email": "ghfgssda@jhfsd.com",
+    "password": "$2b$10$/7zHauZWe9kczAX61Ok1x.RvhZL9WV5xAYlNADAd2xXXbjq0aQfXS",
     "id": 2
-  },
-  {
-    "username": "",
-    "email": "",
-    "password": "",
-    "id": 3
   }
 ]

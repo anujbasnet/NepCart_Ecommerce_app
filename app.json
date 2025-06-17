@@ -2,6 +2,7 @@
   "expo": {
     "name": "my-ecommerce-app",
     "slug": "my-ecommerce-app",
+    "scheme": "my-ecommerce-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,20 +14,27 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.my_ecommerce.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package_name": "com.my_ecommerce.app",
       "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
-    ]
+      ["expo-font"],["@react-native-google-signin/google-signin"]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "14380551-1198-4171-b7bc-cb6c70bea1f5"
+      }
+    }
   }
 }
