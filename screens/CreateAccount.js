@@ -28,7 +28,7 @@ const CreateAccount = ({ navigation }) => {
   const [Username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const baseURL = "http://192.168.1.6:3000";
+  const baseURL = "http://192.168.1.8:3000";
 
 // to be done later
 const postdata = async () => {

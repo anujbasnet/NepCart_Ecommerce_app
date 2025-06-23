@@ -14,20 +14,51 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
+import users from "../backend/Data.json";
+import axios from 'axios'
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "../screens/Home"
+
 const { width, height } = Dimensions.get("window");
 
-const Login = () => {
-  const navigation = useNavigation();
+const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(true);
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const [Username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const matchuser = users.find(
+    (user) =>
+      user.Email === Email && bcrypt.compare(Password, matchuser.password)
+  );
+  const baseURL = "http://192.168.1.8:3000";
+
+
+  // to be done later
+  const handleLogin = async () => {
+    if (!Email || !Password) {
+      alert("Please enter your email and password");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://192.168.1.8:3000/login", {
+        email: Email,
+        password: Password,
+      });
+
+      console.log("Login successful:", response.data);
+      navigation.navigate("Home");
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.log("Login error:", error.response?.data || error.message);
+      alert("Invalid email or password");
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -76,28 +107,7 @@ const Login = () => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                if (!Username || !Email || !Password) {
-                  alert("Please fill in all fields");
-                  return;
-                } else if (Password.length < 6) {
-                  alert("Password must be at least 6 characters long");
-                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(Email)) {
-                  alert("Please enter a valid email address");
-                  return;
-                } else if (!/^[a-zA-Z0-9]+$/.test(Username)) {
-                  alert("Username can only contain letters and numbers");
-                  return;
-                } else {
-                  alert("Account created successfully!");
-                }
-
-                // Handle account creation logic here
-                // For now, you can leave this empty or add navigation if needed
-              }}
-            >
+            <Pressable style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>Sign in</Text>
             </Pressable>
             <Text style={styles.headerText}>Or using other method</Text>
