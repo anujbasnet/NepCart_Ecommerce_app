@@ -1,14 +1,14 @@
 [
   {
-    "username": "Sanskriti",
-    "email": "Sans123@gmail.com",
-    "password": "$2b$10$kGWSED.7A0DCZcShuIKzse8xjoPnleaqz1eMcCLj4PQxxny17nJBq",
+    "username": "niroj",
+    "email": "nirojtwr9@gmail.com",
+    "password": "$2b$10$Gmuair/JyQ/X7vUQAmnZo.c7Wnn1mcYSi1QijHRLdwaKTfia.Kyey",
     "id": 1
   },
   {
-    "username": "anuj",
+    "username": "Anuj",
     "email": "anjbas123@gmail.com",
-    "password": "$2b$10$sXVF9xGXIrp/LGaedT3IQulf1mek.XYYPR/QX5LvodxzeI.jUHutW",
+    "password": "$2b$10$f.X1ltPkiXPcCU5ULAlwDujf.Ul6gH83vR0OyUaxyhetZjiW9b98.",
     "id": 2
   }
 ]
