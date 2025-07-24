@@ -1,4 +1,4 @@
-import "react-native-gesture-handler";
+
 import {
   KeyboardAvoidingView,
   Platform,
@@ -16,9 +16,9 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import users from "../backend/Data.json";
-import axios from 'axios'
+import axios from "axios";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../screens/Home"
+import Home from "./Home";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("window");
@@ -36,37 +36,36 @@ const Login = ({ navigation }) => {
   );
   const baseURL = "http://192.168.1.5:3000";
 
-
   const handleLogin = async () => {
-  if (!Email || !Password) {
-    alert("Please enter your email and password");
-    return;
-  }
-
-  try {
-    const response = await axios.post("http://192.168.1.5:3000/login", {
-      email: Email,
-      password: Password,
-    });
-
-    console.log("Login successful:", JSON.stringify(response.data));
-
-    if (response.data) {
-      await AsyncStorage.setItem("isLoggedIN", JSON.stringify(true)); // Save token to AsyncStorage
-      const check = await AsyncStorage.getItem("isLoggedIN");
-console.log("Stored value:", check);
-      navigation.navigate("Home"); // Navigate to Home and reset stack
-    } else {
-      alert("Login failed: token not received");
+    if (!Email || !Password) {
+      alert("Please enter your email and password");
+      return;
     }
 
-    setEmail("");
-    setPassword("");
-  } catch (error) {
-    console.log("Login error:", error.response?.data || error.message);
-    alert("Invalid email or password");
-  }
-};
+    try {
+      const response = await axios.post("http://192.168.1.5:3000/login", {
+        email: Email,
+        password: Password,
+      });
+
+      console.log("Login successful:", JSON.stringify(response.data));
+
+      if (response.data) {
+        await AsyncStorage.setItem("isLoggedIN", JSON.stringify(true)); // Save token to AsyncStorage
+        const check = await AsyncStorage.getItem("isLoggedIN");
+        console.log("Stored value:", check);
+        navigation.navigate("Home"); // Navigate to Home and reset stack
+      } else {
+        alert("Login failed: token not received");
+      }
+
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.log("Login error:", error.response?.data || error.message);
+      alert("Invalid email or password");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
