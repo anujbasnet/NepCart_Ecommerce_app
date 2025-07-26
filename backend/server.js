@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 app.use(express.json());
 
 const users = [];
-const SECRET_KEY = "your_secret_key_here"; // Use a strong secret, keep it safe
+const SECRET_KEY = "Hello"; 
 
 app.post("/users", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);

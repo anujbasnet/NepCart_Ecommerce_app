@@ -11,7 +11,7 @@ import layout from "../app/layout";
 const { height, width } = Dimensions.get("window");
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import MyProfile from "./MyProfile";
+import Settings from "./Tabs/Settings";
 const Tab = createBottomTabNavigator();
 
 const Home = () => {
