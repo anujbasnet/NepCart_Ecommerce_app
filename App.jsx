@@ -15,8 +15,8 @@ export default function App() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const data = await AsyncStorage.getItem("isLoggedIN");
-        setuserToken(data ? JSON.parse(data) : false);
+        const token = await AsyncStorage.getItem("isLoggedIN");
+        setuserToken(token ? JSON.parse(token) : false);
       } catch (error) {
         console.error('Error checking login status:', error);
         setuserToken(false);

@@ -50,8 +50,8 @@ const Login = ({ navigation }) => {
 
       console.log("Login successful:", JSON.stringify(response.data));
 
-      if (response.data) {
-        await AsyncStorage.setItem("isLoggedIN", JSON.stringify(true)); // Save token to AsyncStorage
+      if (token) {
+        await AsyncStorage.setItem("isLoggedIN", JSON.stringify(token)); // Save token to AsyncStorage
         const check = await AsyncStorage.getItem("isLoggedIN");
         console.log("Stored value:", check);
         navigation.navigate("Home"); // Navigate to Home and reset stack
