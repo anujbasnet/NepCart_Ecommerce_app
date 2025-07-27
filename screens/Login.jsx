@@ -18,7 +18,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import users from "../backend/Data.json";
 import axios from "axios";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./Home";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("window");
@@ -43,18 +42,16 @@ const Login = ({ navigation }) => {
     }
 
     try {
-      const response = await axios.post("http://192.168.1.5:3000/login", {
+      const response = await axios.post("http://192.168.1.5:3000/users/login", {
         email: Email,
         password: Password,
       });
 
       console.log("Login successful:", JSON.stringify(response.data));
-
+      const{token}=response.data;
       if (token) {
         await AsyncStorage.setItem("isLoggedIN", JSON.stringify(token)); // Save token to AsyncStorage
-        const check = await AsyncStorage.getItem("isLoggedIN");
-        console.log("Stored value:", check);
-        navigation.navigate("Home"); // Navigate to Home and reset stack
+        navigation.navigate("MainTabs"); // Navigate to Home and reset stack
       } else {
         alert("Login failed: token not received");
       }
