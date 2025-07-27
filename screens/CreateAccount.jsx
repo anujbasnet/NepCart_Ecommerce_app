@@ -43,7 +43,7 @@ const postdata = async () => {
     setEmail(""); 
     setPassword("");
     console.log("Success :", message);
-    alert(message);
+    alert(message);//code sending is done ui for verification is remaining 
     navigation.navigate("Login");
   } catch (err) {
     console.log("Create account error:", err.response?.data || err.message);

@@ -6,7 +6,7 @@ import CreateAccount from './screens/CreateAccount';
 import Login from './screens/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import MainTabNavigator from './MainTabNavigator'; // <-- make sure this file exists
+import MainTabNavigator from './MainTabNavigator'; 
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -16,7 +16,7 @@ export default function App() {
     const checkLoginStatus = async () => {
       try {
         const token = await AsyncStorage.getItem("isLoggedIN");
-        setuserToken(false);
+        setuserToken(token ? JSON.parse(token) : false);
       } catch (error) {
         console.error('Error checking login status:', error);
         setuserToken(false);
