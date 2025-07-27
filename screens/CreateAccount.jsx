@@ -33,18 +33,21 @@ const CreateAccount = ({ navigation }) => {
 // to be done later
 const postdata = async () => {
   try {
-     await axios.post(`${baseURL}/users`, {
+     const response = await axios.post(`${baseURL}/users`, {
       username: Username,
       email: Email,
       password: Password,
     });
+    const{message}=response.data;
     setUsername("");
     setEmail(""); 
     setPassword("");
+    console.log("Success :", message);
+    alert(message);
     navigation.navigate("Login");
   } catch (err) {
-    console.log(err);
-    alert("Error submitting data");
+    console.log("Create account error:", err.response?.data || err.message);
+    alert(err.response?.data?.message || "Account creation failed");
   }
 };
          
@@ -130,8 +133,6 @@ const postdata = async () => {
                 }
                 else{
                 postdata();
-                  alert("Account created successfully!");
-                navigation.navigate("Login");
                 }
                 
                 // Handle account creation logic here

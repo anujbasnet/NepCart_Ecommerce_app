@@ -45,7 +45,7 @@ const Home = () => {
               source={require("../assets/images/new_arrival.jpg")}
               style={styles.itemImage}
             />
-            <View style={styles.itemTextContainer}>
+            <View style={styles.itemTextContainer} >
               <Text style={styles.itemText}>Side Hand Bag</Text>
               <Text style={styles.itemBrand}>Gucci</Text>
               <Text style={styles.itemText}>RS 120000</Text>

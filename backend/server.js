@@ -4,13 +4,29 @@ const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer= require("nodemailer");
+const dotenv=require("dotenv");
 
+// dotenv.config();
 app.use(express.json());
 
-const users = [];
 const SECRET_KEY = "Hello"; 
 
 app.post("/users", async (req, res) => {
+    const getUsers = () => {
+      try{
+    const data = fs.readFileSync("Data.json", "utf-8");
+    return JSON.parse(data);}
+    catch{
+      return [];
+    }
+  };
+  const users = getUsers();
+  const { username, email, password } = req.body;
+  const existUser=users.find((u)=>u.email===email);
+  if (existUser) {
+    return res.status(401).json({ message: "Email already exists!" });
+  }else{
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const newUser = {
     username: req.body.username,
@@ -20,8 +36,12 @@ app.post("/users", async (req, res) => {
   };
   fs.writeFileSync("Data.json", JSON.stringify([...users, newUser], null, 2));
   users.push(newUser);
-  res.status(201).json(newUser);
+   
+  res.status(201).json({message:"Account created successfully",newUser});
+}
 });
+
+
 
 app.post("/login", async (req, res) => {
   const getUsers = () => {
