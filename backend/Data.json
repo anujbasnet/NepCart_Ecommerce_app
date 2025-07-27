@@ -1,14 +1,26 @@
 [
   {
-    "username": "niroj",
-    "email": "nirojtwr9@gmail.com",
-    "password": "$2b$10$Gmuair/JyQ/X7vUQAmnZo.c7Wnn1mcYSi1QijHRLdwaKTfia.Kyey",
+    "username": "Anuj",
+    "email": "anjbas123@gmail.com",
+    "password": "$2b$10$J1KX1OgM2Ap3e/diQXE8C.cNp4VByWoxhMvtpIhJ8R1COgiiE66AG",
     "id": 1
   },
   {
     "username": "Anuj",
-    "email": "anjbas123@gmail.com",
-    "password": "$2b$10$f.X1ltPkiXPcCU5ULAlwDujf.Ul6gH83vR0OyUaxyhetZjiW9b98.",
+    "email": "anjbas13@gmail.com",
+    "password": "$2b$10$xKdvjoqIG2LmFsaiQAPZD.UULyO8T.fnUaBwssaqk0KTgRaMBursy",
     "id": 2
+  },
+  {
+    "username": "Anuj",
+    "email": "anujbro@gmail.com",
+    "password": "$2b$10$i/y7Di5I2BVq00P.9cjI7Ouond6/ZAl2k79266.hKTdO4rI4MC4lW",
+    "id": 3
+  },
+  {
+    "username": "Anuj",
+    "email": "odd1squad@gmail.com",
+    "password": "$2b$10$EEY25A4DImpk4qvnI/RLFuDj4eg5V6kRRDOXW5dWZc0uV4KIgn3Le",
+    "id": 4
   }
 ]
