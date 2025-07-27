@@ -16,7 +16,7 @@ export default function App() {
     const checkLoginStatus = async () => {
       try {
         const token = await AsyncStorage.getItem("isLoggedIN");
-        setuserToken(token ? JSON.parse(token) : false);
+        setuserToken(true);
       } catch (error) {
         console.error('Error checking login status:', error);
         setuserToken(false);
