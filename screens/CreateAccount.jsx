@@ -28,7 +28,7 @@ const CreateAccount = ({ navigation }) => {
   const [Username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const baseURL = "http://192.168.1.5:3000";
+  const baseURL = "http://192.168.1.4:3000";
 
 // to be done later
 const postdata = async () => {
@@ -44,7 +44,7 @@ const postdata = async () => {
     setPassword("");
     console.log("Success :", message);
     alert(message);//code sending is done ui for verification is remaining 
-    navigation.navigate("Login");
+    navigation.navigate("Verification");
   } catch (err) {
     console.log("Create account error:", err.response?.data || err.message);
     alert(err.response?.data?.message || "Account creation failed");

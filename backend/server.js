@@ -9,7 +9,8 @@ const dotenv=require("dotenv");
 
 dotenv.config();
 app.use(express.json());
-
+const code=Math.floor(100000 +Math.random()*900000).toString();
+const expiresAt=Date.now()+5*60*1000;
 
 
 app.post("/users", async (req, res) => {
@@ -28,8 +29,7 @@ app.post("/users", async (req, res) => {
     return res.status(401).json({ message: "Email already exists!" });
   }else{
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const code=Math.floor(100000 +Math.random()*900000).toString();
-  const expiresAt=Date.now()+5*60*1000;
+
   const newUser = {
     username: req.body.username,
     email: req.body.email,
