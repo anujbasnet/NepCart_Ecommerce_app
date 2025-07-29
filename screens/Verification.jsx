@@ -12,20 +12,23 @@ import {
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import React, { useRef, useState } from "react";
+import axios from "axios";
 const { height, width } = Dimensions.get("window");
-const Verification = () => {
-  const [fontsLoaded] = useFonts({
+const Verification = ({navigation}) => {
+  useFonts({
     "Baloo2-Bold": require("../assets/fonts/Baloo2-Bold.ttf"),
     "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
     "Baloo2-Regular": require("../assets/fonts/Baloo2-Regular.ttf"),
   });
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputs = useRef([]);
-
+  const baseURL = "http://192.168.1.5:3000";
+  const newCode = [...code];
   const handleChange = (text, index) => {
-    const newCode = [...code];
+    
     newCode[index] = text;
     setCode(newCode);
+    
     // Move to next input
     if (text && index < 5) {
       inputs.current[index + 1].focus();
@@ -37,6 +40,25 @@ const Verification = () => {
       inputs.current[index - 1].focus();
     }
   };
+  const FinalOTP = newCode.join('');
+  const handleVerification=async()=>{
+    
+    try{
+      const response = await axios.get(`${baseURL}/handleVerification`);
+    if(FinalOTP===response.data.code){
+      navigation.navigate('Login');
+    }else{
+      console.log("Incorrect OTP")
+      alert('Incorrect Code')
+    }
+
+    } catch(error){
+      console.log('error fetching OTP: ',error);
+      alert('Something went wrong');
+    }
+
+   
+  }
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -89,11 +111,18 @@ const Verification = () => {
             />
           ))}
         </View>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={()=>{
+          handleVerification();
+        }} >
           <Text style={styles.buttonText}>Submit</Text>
         </Pressable>
-        <View style={{ flexDirection: "row" }}>
-          <Text>Didn't receive the code? </Text> <Text>Resend</Text>
+        <View style={{ flexDirection: "row", flex:1, justifyContent:'center' }}>
+          <Text style={{ fontFamily: "Baloo2-Regular",  fontSize:width*0.045, }}>
+            Didn't receive the code?
+          </Text>
+          <Text style={{ color: "#6555d2ff", fontFamily: "Baloo2-Regular", fontSize:width*0.045,  }}>
+            Resend
+          </Text>
         </View>
       </KeyboardAvoidingView>
     </ScrollView>

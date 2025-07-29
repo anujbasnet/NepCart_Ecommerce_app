@@ -123,7 +123,10 @@ app.post("users/login", async (req, res) => {
     token, // send token to client
   });
 });
+app.get('/handleVerification',(req,res)=>{
 
+  return res.status(200).json({code});
+})
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });

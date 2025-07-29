@@ -11,11 +11,10 @@ import {
   Platform,
   Dimensions,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import axios from "axios";
 import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
 const { width, height } = Dimensions.get("window");
 
 
@@ -53,11 +52,14 @@ const postdata = async () => {
          
     
   return (
+    
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{ flex: 1 }}
     >
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+       <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}
+        >
         <View style={styles.container}>
           <Text style={styles.header}>Create Account</Text>
           <Text style={styles.headerText}>
@@ -169,7 +171,8 @@ const postdata = async () => {
             <Text style={styles.facebookText}>Sign up with Facebook</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+    
+    </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -179,8 +182,7 @@ export default CreateAccount;
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
+    flexGrow: 1
   },
   container: {
     flex: 1,
