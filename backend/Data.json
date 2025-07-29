@@ -1,11 +1,20 @@
 [
   {
-    "username": "anuj",
+    "username": "Sans",
+    "email": "sans13560@gmail.com",
+    "password": "$2b$10$msgpKmiJFlij9EwBAR.oa.Yn0GmHERhdc7MsCBQI5Ab6RoMVemT4u",
+    "id": 2,
+    "code": "633797",
+    "expiresAt": 1753706734225,
+    "isVerified": false
+  },
+  {
+    "username": "Anuj",
     "email": "anjbas123@gmail.com",
-    "password": "$2b$10$7JDPZZTC3Eg4WbcN9Oodyu7hlvHp32.jHhndtlbHu0kh62LLQVc5K",
-    "id": 1,
-    "code": "132638",
-    "expiresAt": 1753684202375,
+    "password": "$2b$10$TK2UzXrBEPAPOBCIUMtQZuOECRU40HXRj0tHkLJN5kAl/L84y7Cky",
+    "id": 2,
+    "code": "523876",
+    "expiresAt": 1753804581123,
     "isVerified": false
   }
 ]
