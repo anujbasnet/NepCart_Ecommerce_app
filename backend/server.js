@@ -2,86 +2,86 @@ const http = require("http");
 const express = require("express");
 const app = express();
 const fs = require("fs");
-const fsp=fs.promises;
-const path =require("path")
+const fsp = fs.promises;
+const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const nodemailer= require("nodemailer");
-const dotenv=require("dotenv");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
 
 dotenv.config();
 app.use(express.json());
 
-
 app.post("/users", async (req, res) => {
-    const getUsers = () => {
-      try{
-    const data = fs.readFileSync("Data.json", "utf-8");
-    return JSON.parse(data);}
-    catch{
+  const getUsers = () => {
+    try {
+      const data = fs.readFileSync("Data.json", "utf-8");
+      return JSON.parse(data);
+    } catch {
       return [];
     }
   };
-  
-  const code=Math.floor(100000 +Math.random()*900000).toString();
-  const expiresAt=Date.now()+5*60*1000;
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  const expiresAt = Date.now() + 5 * 60 * 1000;
   const users = getUsers();
   const { username, email, password } = req.body;
-  const existUser=users.find((u)=>u.email===email);
+  const existUser = users.find((u) => u.email === email);
   if (existUser) {
     return res.status(401).json({ message: "Email already exists!" });
-  }else{
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  } else {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-  const newUser = {
-    username: req.body.username,
-    email: req.body.email,
-    password: hashedPassword,
-    id: users.length + 1,
-    code,
-    expiresAt,
-    isVerified:false
-  };
-  const transporter =nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, 
-  },
-});
-  fs.writeFileSync("Data.json", JSON.stringify([...users, newUser], null, 2));
-  users.push(newUser);
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Your Verification Code",
-    html: `<p>Your 6-digit code is: <strong>${code}</strong></p>`,
-  });
-  res.json({message:"Verification code sent!"})
-}
+    const newUser = {
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword,
+      id: users.length + 1,
+      code,
+      expiresAt,
+      isVerified: false,
+    };
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    fs.writeFileSync("Data.json", JSON.stringify([...users, newUser], null, 2));
+    users.push(newUser);
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Your Verification Code",
+      html: `<p>Your 6-digit code is: <strong>${code}</strong></p>`,
+    });
+    res.json({ message: "Verification code sent!" });
+  }
 });
 
 //Login
 app.post("/users/login", async (req, res) => {
-   const getUsers = () => {
-      try{
-    const data = fs.readFileSync("Data.json", "utf-8");
-    return JSON.parse(data);}
-    catch{
+  const getUsers = () => {
+    try {
+      const data = fs.readFileSync("Data.json", "utf-8");
+      return JSON.parse(data);
+    } catch {
       return [];
     }
   };
   const users = getUsers();
   const { username, email, password } = req.body;
-  const existUser=users.find((u)=>u.email===email);
-  if (!existUser){ 
-    return res.status(404).json({ message: "User not found" });}
+  const existUser = users.find((u) => u.email === email);
+  if (!existUser) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
   const isMatch = await bcrypt.compare(password, existUser.password);
   if (!isMatch) {
     return res.status(401).json({ message: "Invalid password" });
   }
-    if (!existUser.isVerified) {
+  if (!existUser.isVerified) {
     return res.status(403).json({ message: "Please verify your email first" });
   }
 
@@ -99,17 +99,15 @@ app.post("/users/login", async (req, res) => {
 });
 
 //OTP Verification
-app.post('/handleVerification', async (req, res) => {
+app.post("/handleVerification", async (req, res) => {
   const { email, OTP } = req.body;
-  console.log("Received:", { email, OTP });
-
   try {
     const data = await fsp.readFile("Data.json", "utf-8");
     const users = JSON.parse(data);
-    const existUser = users.find(u => u.email === email);
+    const existUser = users.find((u) => u.email === email);
 
     if (!existUser) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     if (Date.now() > existUser.expiresAt) {
@@ -117,15 +115,13 @@ app.post('/handleVerification', async (req, res) => {
     }
 
     if (String(OTP) === String(existUser.code)) {
-      console.log(String(OTP) === String(existUser.code))
       existUser.isVerified = true;
       existUser.code = null;
       existUser.expiresAt = null;
 
       await fsp.writeFile("Data.json", JSON.stringify(users, null, 2));
-      return res.status(200).json({ message: 'Verification successful' });
-    } 
-    else if(String(OTP) !== String(existUser.code)) {
+      return res.status(200).json({ message: "Verification successful" });
+    } else if (String(OTP) !== String(existUser.code)) {
       return res.status(400).json({ message: "Invalid code" });
     }
   } catch (error) {
