@@ -11,10 +11,10 @@
   {
     "username": "Anuj",
     "email": "anjbas123@gmail.com",
-    "password": "$2b$10$rks2.FVhbTXOupDWMKTdC.Ah97U5IVK0HDt8jJeQa/68fdjpVgSCG",
+    "password": "$2b$10$.9L/qOYFw4mVT5dV1q2GUegeQLtNjQdSAij4kh3CTaytck6oMrx8m",
     "id": 2,
-    "code": "814501",
-    "expiresAt": 1753811461121,
-    "isVerified": false
+    "code": null,
+    "expiresAt": null,
+    "isVerified": true
   }
 ]

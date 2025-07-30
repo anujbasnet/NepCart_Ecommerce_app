@@ -15,6 +15,7 @@ import { useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import axios from "axios";
 import 'react-native-get-random-values';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width, height } = Dimensions.get("window");
 
 
@@ -38,6 +39,7 @@ const postdata = async () => {
       password: Password,
     });
     const{message}=response.data;
+    await AsyncStorage.setItem("UserEmail",Email);
     setUsername("");
     setEmail(""); 
     setPassword("");
@@ -55,6 +57,7 @@ const postdata = async () => {
     
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{flex:1}}
     >
        <ScrollView
           keyboardShouldPersistTaps="handled"

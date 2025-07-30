@@ -2,6 +2,8 @@ const http = require("http");
 const express = require("express");
 const app = express();
 const fs = require("fs");
+const fsp=fs.promises;
+const path =require("path")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer= require("nodemailer");
@@ -9,8 +11,6 @@ const dotenv=require("dotenv");
 
 dotenv.config();
 app.use(express.json());
-const code=Math.floor(100000 +Math.random()*900000).toString();
-const expiresAt=Date.now()+5*60*1000;
 
 
 app.post("/users", async (req, res) => {
@@ -22,6 +22,9 @@ app.post("/users", async (req, res) => {
       return [];
     }
   };
+  
+  const code=Math.floor(100000 +Math.random()*900000).toString();
+  const expiresAt=Date.now()+5*60*1000;
   const users = getUsers();
   const { username, email, password } = req.body;
   const existUser=users.find((u)=>u.email===email);
@@ -58,38 +61,41 @@ app.post("/users", async (req, res) => {
 }
 });
 
-app.post("/users/verifyCode",(req,res)=>{
-  const getUsers = () => {
-      try{
-    const data = fs.readFileSync("Data.json", "utf-8");
-    return JSON.parse(data);}
-    catch{
-      return [];
-    }
-  };
-  const users = getUsers();
-  const { username, email, password } = req.body;
-  const existUser=users.find((u)=>u.email===email);
-  if (!existUser) return res.status(404).json({ message: "User not found" });
-  if (existUser.isVerified) return res.status(400).json({ message: "User already verified" });
+// app.post("/users/verifyCode",(req,res)=>{
+//   const getUsers = () => {
+//       try{
+//     const data = fs.readFileSync("Data.json", "utf-8");
+//     return JSON.parse(data);}
+//     catch{
+//       return [];
+//     }
+//   };
+//   const users = getUsers();
+//   const { username, email, password, code: userCode } = req.body;
+//   const existUser=users.find((u)=>u.email===email);
+//   const writeUsers = (users) => {
+//     fs.writeFileSync("Data.json", JSON.stringify(users, null, 2));
+//   };
+//   if (!existUser) return res.status(404).json({ message: "User not found" });
+//   if (existUser.isVerified) return res.status(400).json({ message: "User already verified" });
 
-   if (existUser.code !== code) {
-    return res.status(400).json({ message: "Invalid code" });
-  }
+//   if (existUser.code !== userCode) {
+//     return res.status(400).json({ message: "Invalid code" });
+//   }
 
-   if (Date.now() > existUser.expiresAt) {
-    return res.status(400).json({ message: "Code expired" });
-  }
-  existUser.isVerified = true;
-  existUser.code = null;
-  existUser.expiresAt = null;
-  writeUsers(users);
+//    if (Date.now() > existUser.expiresAt) {
+//     return res.status(400).json({ message: "Code expired" });
+//   }
+//   existUser.isVerified = true;
+//   existUser.code = null;
+//   existUser.expiresAt = null;
+//   writeUsers(users);
 
-  res.status(201).json({message:"Account created successfully",newUser});
-})
+//   res.status(201).json({message:"Account created successfully"});
+// })
 
 
-app.post("users/login", async (req, res) => {
+app.post("/users/login", async (req, res) => {
    const getUsers = () => {
       try{
     const data = fs.readFileSync("Data.json", "utf-8");
@@ -101,7 +107,8 @@ app.post("users/login", async (req, res) => {
   const users = getUsers();
   const { username, email, password } = req.body;
   const existUser=users.find((u)=>u.email===email);
-  if (!existUser) return res.status(404).json({ message: "User not found" });
+  if (!existUser){ 
+    return res.status(404).json({ message: "User not found" });}
 
   const isMatch = await bcrypt.compare(password, existUser.password);
   if (!isMatch) {
@@ -113,9 +120,9 @@ app.post("users/login", async (req, res) => {
 
   // Generate JWT token
   const token = jwt.sign(
-    { id: existUser.id, email: user.email, username: user.username }, // payload
+    { id: existUser.id, email: existUser.email, username: existUser.username }, // payload
     process.env.JWT_SECRET,
-    { expiresIn: "1h" } // token valid for 1 hour
+    { expiresIn: "365d" } // token valid for 1 hour
   );
 
   return res.status(200).json({
@@ -123,10 +130,42 @@ app.post("users/login", async (req, res) => {
     token, // send token to client
   });
 });
-app.get('/handleVerification',(req,res)=>{
 
-  return res.status(200).json({code});
-})
+//OTP Verification
+app.post('/handleVerification', async (req, res) => {
+  const { email, OTP } = req.body;
+  console.log("Received:", { email, OTP });
+
+  try {
+    const data = await fsp.readFile("Data.json", "utf-8");
+    const users = JSON.parse(data);
+    const existUser = users.find(u => u.email === email);
+
+    if (!existUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (Date.now() > existUser.expiresAt) {
+      return res.status(400).json({ message: "Code expired" });
+    }
+
+    if (String(OTP) === String(existUser.code)) {
+      console.log(String(OTP) === String(existUser.code))
+      existUser.isVerified = true;
+      existUser.code = null;
+      existUser.expiresAt = null;
+
+      await fsp.writeFile("Data.json", JSON.stringify(users, null, 2));
+      return res.status(200).json({ message: 'Verification successful' });
+    } 
+    else if(String(OTP) !== String(existUser.code)) {
+      return res.status(400).json({ message: "Invalid code" });
+    }
+  } catch (error) {
+    console.error("Verification error:", error);
+    return res.status(500).json({ message: "Something went wrong", error });
+  }
+});
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });

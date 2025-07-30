@@ -13,6 +13,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { height, width } = Dimensions.get("window");
 const Verification = ({navigation}) => {
   useFonts({
@@ -44,17 +45,33 @@ const Verification = ({navigation}) => {
   const handleVerification=async()=>{
     
     try{
-      const response = await axios.get(`${baseURL}/handleVerification`);
-    if(FinalOTP===response.data.code){
-      navigation.navigate('Login');
-    }else{
-      console.log("Incorrect OTP")
-      alert('Incorrect Code')
+      const Email = await AsyncStorage.getItem("UserEmail")
+      const response = await axios.post(`${baseURL}/handleVerification`,{
+        email:Email,
+        OTP:FinalOTP
+      });
+      const {message}=response.data;
+      if(message=='Verification successful'){
+        alert(message);
+        navigation.navigate('Login');
+      }else{
+      alert(message)
+      console.log(message)
     }
-
     } catch(error){
-      console.log('error fetching OTP: ',error);
+      if (error.response) {
+      // Server responded with a non-2xx status
+      console.log('Server error:', error.response.data.message);
+      alert(error.response.data.message);
+    } else if (error.request) {
+      // No response received from server
+      console.log('No response:', error.request);
+      alert('No response from server. Check your network or IP.');
+    } else {
+      // Error setting up the request
+      console.log('Error:', error.message);
       alert('Something went wrong');
+    }
     }
 
    
