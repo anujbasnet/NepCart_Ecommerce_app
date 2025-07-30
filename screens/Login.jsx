@@ -1,4 +1,3 @@
-
 import {
   KeyboardAvoidingView,
   Platform,
@@ -13,7 +12,7 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import users from "../backend/Data.json";
 import axios from "axios";
@@ -29,11 +28,7 @@ const Login = ({ navigation }) => {
   };
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const matchuser = users.find(
-    (user) =>
-      user.Email === Email && bcrypt.compare(Password, matchuser.password)
-  );
-  const baseURL = "http://192.168.1.5:3000";
+  const baseURL = "http://192.168.1.3:3000";
 
   const handleLogin = async () => {
     if (!Email || !Password) {
@@ -48,14 +43,12 @@ const Login = ({ navigation }) => {
       });
 
       console.log("Login successful:", JSON.stringify(response.data));
-      const{token}=response.data;
+      const { token } = response.data;
       if (token) {
         await AsyncStorage.setItem("isLoggedIN", JSON.stringify(token)); // Save token to AsyncStorage
-        navigation.navigate("MainTabs"); // Navigate to Home and reset stack
       } else {
         alert("Login failed: token not received");
       }
-
       setEmail("");
       setPassword("");
     } catch (error) {

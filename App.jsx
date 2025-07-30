@@ -8,38 +8,39 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import MainTabNavigator from './MainTabNavigator'; 
 import Verification from './screens/Verification';
+import { AuthContext } from './authContext';
 export default function App() {
-  const Stack = createNativeStackNavigator();
+  const RootStack = createNativeStackNavigator();
   const [userToken, setuserToken] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const checkLoginStatus = async () => {
-      try {
         const token = await AsyncStorage.getItem("isLoggedIN");
-        setuserToken(false);
-      } catch (error) {
-        console.error('Error checking login status:', error);
-        setuserToken(false);
-      }
+        setuserToken(token);
+        setLoading(false);
+        checkLoginStatus();
     };
     checkLoginStatus();
   }, []);
+  if(loading) return null;
 
   return (
-    <NavigationContainer>
-      {userToken ? (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="MainTabs" component={MainTabNavigator} />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-          <Stack.Screen name="Create" component={CreateAccount} />
-          <Stack.Screen name="Verification" component={Verification} />
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      )}
-    </NavigationContainer>
+    <AuthContext.Provider value={{ userToken, setuserToken }}>
+      <NavigationContainer>
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          {userToken ? (
+            <RootStack.Screen name="MainTabs" component={MainTabNavigator} />
+          ) : (
+            <>
+              <RootStack.Screen name="Splash" component={SplashScreen} />
+              <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
+              <RootStack.Screen name="Create" component={CreateAccount} />
+              <RootStack.Screen name="Verification" component={Verification} />
+              <RootStack.Screen name="Login" component={Login} />
+            </>
+          )}
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }

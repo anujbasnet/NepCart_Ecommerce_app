@@ -23,7 +23,7 @@ const Verification = ({navigation}) => {
   });
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputs = useRef([]);
-  const baseURL = "http://192.168.1.5:3000";
+  const baseURL = "http://192.168.1.3:3000";
   const newCode = [...code];
   const handleChange = (text, index) => {
     

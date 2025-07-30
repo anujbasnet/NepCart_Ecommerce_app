@@ -61,40 +61,7 @@ app.post("/users", async (req, res) => {
 }
 });
 
-// app.post("/users/verifyCode",(req,res)=>{
-//   const getUsers = () => {
-//       try{
-//     const data = fs.readFileSync("Data.json", "utf-8");
-//     return JSON.parse(data);}
-//     catch{
-//       return [];
-//     }
-//   };
-//   const users = getUsers();
-//   const { username, email, password, code: userCode } = req.body;
-//   const existUser=users.find((u)=>u.email===email);
-//   const writeUsers = (users) => {
-//     fs.writeFileSync("Data.json", JSON.stringify(users, null, 2));
-//   };
-//   if (!existUser) return res.status(404).json({ message: "User not found" });
-//   if (existUser.isVerified) return res.status(400).json({ message: "User already verified" });
-
-//   if (existUser.code !== userCode) {
-//     return res.status(400).json({ message: "Invalid code" });
-//   }
-
-//    if (Date.now() > existUser.expiresAt) {
-//     return res.status(400).json({ message: "Code expired" });
-//   }
-//   existUser.isVerified = true;
-//   existUser.code = null;
-//   existUser.expiresAt = null;
-//   writeUsers(users);
-
-//   res.status(201).json({message:"Account created successfully"});
-// })
-
-
+//Login
 app.post("/users/login", async (req, res) => {
    const getUsers = () => {
       try{
