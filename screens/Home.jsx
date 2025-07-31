@@ -12,9 +12,15 @@ const { height, width } = Dimensions.get("window");
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Settings from "./Tabs/Settings";
+import { useFonts } from "expo-font";
 const Tab = createBottomTabNavigator();
 
 const Home = () => {
+  useFonts({
+      "Baloo2-Bold": require("../assets/fonts/Baloo2-Bold.ttf"),
+      "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
+      "Baloo2-Regular": require("../assets/fonts/Baloo2-Regular.ttf"),
+    });
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>

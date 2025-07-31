@@ -16,16 +16,18 @@ import Feather from "@expo/vector-icons/Feather";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 const { width, height } = Dimensions.get("window");
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const Settings = () => {
+  const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     "Baloo2-Bold": require("../../assets/fonts/Baloo2-Bold.ttf"),
     "Baloo2-Medium": require("../../assets/fonts/Baloo2-Medium.ttf"),
     "Baloo2-Regular": require("../../assets/fonts/Baloo2-Regular.ttf"),
   });
-  const handleLogout=async()=>{
-    await AsyncStorage.removeItem('isLoggedIN');
-  }
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("isLoggedIN");
+  };
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
@@ -40,7 +42,10 @@ const Settings = () => {
             General
           </Text>
         </View>
-        <View style={styles.profileEdit}>
+        <Pressable
+          style={styles.profileEdit}
+          onPress={() => navigation.navigate("EditProfile")}
+        >
           <View
             style={{
               marginLeft: width * 0.05,
@@ -66,7 +71,7 @@ const Settings = () => {
             color="#c6c6c6ff"
             style={{ marginRight: width * 0.05 }}
           />
-        </View>
+        </Pressable>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -234,7 +239,7 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
-        <View style={styles.profileEdit} >
+        <View style={styles.profileEdit}>
           <Pressable
             style={{
               marginLeft: width * 0.05,

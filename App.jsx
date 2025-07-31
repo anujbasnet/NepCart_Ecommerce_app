@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import MainTabNavigator from './MainTabNavigator'; 
 import Verification from './screens/Verification';
 import { AuthContext } from './authContext';
+import EditProfile from './screens/Tabs/EditProfile';
 export default function App() {
   const RootStack = createNativeStackNavigator();
   const [userToken, setuserToken] = useState(false);
@@ -30,6 +31,7 @@ export default function App() {
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           {userToken ? (
             <RootStack.Screen name="MainTabs" component={MainTabNavigator} />
+            
           ) : (
             <>
               <RootStack.Screen name="Splash" component={SplashScreen} />
