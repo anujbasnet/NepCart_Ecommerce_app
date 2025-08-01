@@ -72,6 +72,7 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </Pressable>
+        <Pressable onPress={() => navigation.navigate("ChangePassword")}>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -99,6 +100,10 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
+        </Pressable>
+        <Pressable onPress={()=>{
+          navigation.navigate("notifications")
+        }}>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -126,6 +131,8 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
+        </Pressable>
+        <Pressable>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -153,6 +160,8 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
+        </Pressable>
+        <Pressable>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -180,11 +189,13 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
+        </Pressable>
         <View style={{ marginTop: height * 0.02, marginLeft: width * 0.05 }}>
           <Text style={{ fontFamily: "Baloo2-Bold", fontSize: width * 0.052 }}>
             Preferencess
           </Text>
         </View>
+        <Pressable>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -212,6 +223,8 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
+        </Pressable>
+        <Pressable>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -239,6 +252,7 @@ const Settings = () => {
             style={{ marginRight: width * 0.05 }}
           />
         </View>
+        </Pressable>
         <View style={styles.profileEdit}>
           <Pressable
             style={{
