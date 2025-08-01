@@ -8,7 +8,6 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
@@ -29,7 +28,7 @@ const EditProfile = () => {
           Edit Profile
         </Text>
       </View>
-      <ScrollView
+      <View
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: "#ffffff" }}
@@ -71,7 +70,7 @@ const EditProfile = () => {
           <Text style={styles.buttonText}>Create Account</Text>
         </Pressable>
         </View>
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };

@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import your actual screens
 import HomeScreen from './Home';
-import Profile from './MyProfile'; // You can create this screen
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +28,6 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };

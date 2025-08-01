@@ -102,7 +102,7 @@ const Settings = () => {
         </View>
         </Pressable>
         <Pressable onPress={()=>{
-          navigation.navigate("notifications")
+          navigation.navigate("ToggleNotification")
         }}>
         <View style={styles.profileEdit}>
           <View
@@ -132,7 +132,9 @@ const Settings = () => {
           />
         </View>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={()=>{
+          navigation.navigate("Security")
+        }}>
         <View style={styles.profileEdit}>
           <View
             style={{

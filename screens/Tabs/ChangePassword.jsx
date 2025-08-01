@@ -3,12 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   Pressable,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -43,7 +41,7 @@ const ChangePassword = () => {
           Change Password
         </Text>
       </View>
-      <ScrollView
+      <View
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, backgroundColor: "#ffffff" }}
@@ -99,7 +97,7 @@ const ChangePassword = () => {
             <Text style={styles.buttonText}>Create Account</Text>
           </Pressable>
         </View>
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };
