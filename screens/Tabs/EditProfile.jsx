@@ -11,12 +11,18 @@ import {
   ScrollView,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useFonts } from "expo-font";
 const { height, width } = Dimensions.get("window");
 const EditProfile = () => {
+  useFonts({
+    "Baloo2-Bold": require("../../assets/fonts/Baloo2-Bold.ttf"),
+    "Baloo2-Medium": require("../../assets/fonts/Baloo2-Medium.ttf"),
+    "Baloo2-Regular": require("../../assets/fonts/Baloo2-Regular.ttf"),
+  });
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{flex:1}}
+      behaviour={Platform.OS === "ios" ? "position" : undefined}
+      style={{ flex: 1, backgroundColor:'#ffffff' }}
     >
       <View style={styles.heading}>
         <Text style={{ fontSize: width * 0.055, fontFamily: "Baloo2-Medium" }}>
@@ -26,26 +32,44 @@ const EditProfile = () => {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1, backgroundColor: "#ffffff" }}
       >
-        <View style={styles.container}>
-          
+        <View style={{ alignItems: "center", marginTop: height * 0.03 }}>
+          <Image
+            source={require("../../assets/images/pfp.jpg")}
+            style={styles.Image}
+          />
+        </View>
+        <View>
+          <Text style={styles.label}>Username</Text>
+          <View style={styles.inputContainer}>
+            <AntDesign name="user" size={20} color="#777" />
+            <TextInput
+              placeholder="User"
+              style={styles.input}
+              autoCorrect={false}
+              spellCheck={false}
+              placeholderTextColor={"black"}
+            />
+          </View>
+        </View>
+        <View>
           <Text style={styles.label}>Email or Phone Number</Text>
           <View style={styles.inputContainer}>
             <AntDesign name="mail" size={20} color="#777" />
             <TextInput
-              placeholder="Enter your email or phone number"
+              placeholder="anjbas123@gmail.com"
               style={styles.input}
-              autoCapitalize="none"
               autoCorrect={false}
               spellCheck={false}
+              placeholderTextColor={"black"}
             />
           </View>
-          <View style={styles.buttonContainer}>
-            <Pressable style={styles.button}>
-              <Text style={styles.buttonText}>Sign in</Text>
-            </Pressable>
-          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Create Account</Text>
+        </Pressable>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -61,31 +85,13 @@ const styles = StyleSheet.create({
     height: height * 0.12,
     borderBottomWidth: 2,
     borderBottomColor: "#e6e5e5ff",
-    backgroundColor:'#ffffff'
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
-  },
-  container: {
-    backgroundColor: "#fff",
-    paddingHorizontal: width * 0.05,
-    paddingTop: height * 0.08,
-  },
-  header: {
-    fontSize: 28,
-    fontFamily: "Baloo2-Bold",
-  },
-  headerText: {
-    fontSize: 16,
-    color: "#777",
-    fontFamily: "Baloo2-Medium",
-    marginTop: 4,
+    backgroundColor: "#ffffff",
   },
   label: {
     fontSize: 20,
-    fontFamily: "Baloo2-SemiBold",
+    fontFamily: "Baloo2-Medium",
     marginTop: height * 0.03,
+    marginHorizontal: width * 0.05,
   },
   inputContainer: {
     flexDirection: "row",
@@ -95,6 +101,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: Platform.OS === "ios" ? 12 : 8,
     marginTop: 8,
+    marginHorizontal: width * 0.05,
   },
   input: {
     flex: 1,
@@ -105,7 +112,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: "center",
-    marginTop: height * 0.04,
+    marginTop: height * 0.15,
+    marginHorizontal: width * 0.05,
   },
   button: {
     backgroundColor: "#6C5DD3",
@@ -119,29 +127,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Baloo2-Medium",
   },
-  altAuthContainer: {
-    marginTop: height * 0.03,
-    alignItems: "center",
-  },
-  altAuthImage: {
-    width: width * 0.6,
-    height: height * 0.06,
-  },
-  facebookContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: height * 0.015,
-    gap: 10,
-  },
-  facebookIcon: {
-    width: 24,
-    height: 24,
-  },
-  facebookText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#444",
-    fontFamily: "Baloo2-Medium",
+  Image: {
+    height: width * 0.3,
+    width: width * 0.3,
+    borderRadius: 100,
   },
 });

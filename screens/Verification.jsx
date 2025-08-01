@@ -80,7 +80,7 @@ const Verification = ({navigation}) => {
     <ScrollView
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }} 
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "position" : undefined}
