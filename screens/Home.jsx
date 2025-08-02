@@ -6,13 +6,15 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import layout from "../app/layout";
 const { height, width } = Dimensions.get("window");
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Settings from "./Tabs/Settings";
 import { useFonts } from "expo-font";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Tab = createBottomTabNavigator();
 
 const Home = () => {
@@ -21,6 +23,23 @@ const Home = () => {
       "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
       "Baloo2-Regular": require("../assets/fonts/Baloo2-Regular.ttf"),
     });
+    const BaseURL="http://192.168.1.5:3000"
+    const getData =async ()=>{
+      try{
+      const token = await AsyncStorage.getItem('isLoggedIN')
+     const response= await axios.get(`${BaseURL}/getUsername`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }}
+     )
+      const {message}=response.data;
+      return message;
+      }catch(error){
+        console.log(error)
+      }
+    }
+
+    const UserName=useEffect(()=>{getData()},[])
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -28,8 +47,7 @@ const Home = () => {
           source={require("../assets/images/pfp.jpg")}
           style={styles.image}
         />
-        <Text style={styles.name}>Hi, </Text>
-        <Text style={styles.name}>User</Text>
+        <Text style={styles.name}>Hi, {UserName}</Text>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>

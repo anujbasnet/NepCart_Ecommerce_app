@@ -57,11 +57,12 @@ const postdata = async () => {
     
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{flex:1}}
+      style={{flex:1,backgroundColor:"#ffffff"}}
     >
        <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}
+
         >
         <View style={styles.container}>
           <Text style={styles.header}>Create Account</Text>
@@ -185,7 +186,7 @@ export default CreateAccount;
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   container: {
     flex: 1,

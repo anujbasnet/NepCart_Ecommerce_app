@@ -163,7 +163,7 @@ const Settings = () => {
           />
         </View>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={()=>navigation.navigate('Language')}>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -197,7 +197,7 @@ const Settings = () => {
             Preferencess
           </Text>
         </View>
-        <Pressable>
+        <Pressable onPress={()=>{navigation.navigate('LegalPolicies')}}>
         <View style={styles.profileEdit}>
           <View
             style={{
@@ -257,11 +257,11 @@ const Settings = () => {
         </Pressable>
         <View style={styles.profileEdit}>
           <Pressable
-            style={{
+            style={[{
               marginLeft: width * 0.05,
               flexDirection: "row",
               gap: width * 0.03,
-            }}
+            }]}
             onPress={handleLogout}
           >
             <MaterialIcons

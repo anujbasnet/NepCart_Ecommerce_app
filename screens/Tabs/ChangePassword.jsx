@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
@@ -32,10 +33,12 @@ const ChangePassword = () => {
   };
 
   return (
+   
     <KeyboardAvoidingView
-      behaviour={Platform.OS === "ios" ? "position" : undefined}
+      behaviour={Platform.OS === "ios" ? "padding" : undefined}
       style={{ flex: 1, backgroundColor: "#ffffff" }}
-    >
+      >
+        <Pressable onPress={Keyboard.dismiss}>
       <View style={styles.heading}>
         <Text style={{ fontSize: width * 0.055, fontFamily: "Baloo2-Medium" }}>
           Change Password
@@ -98,6 +101,7 @@ const ChangePassword = () => {
           </Pressable>
         </View>
       </View>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 };

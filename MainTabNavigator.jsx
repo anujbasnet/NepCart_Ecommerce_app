@@ -16,7 +16,7 @@ export default function MainTabNavigator() {
         tabBarIcon: ({ color, size }) => {
           const icons = {
             Home: 'home',
-            Settings: 'settings',
+            SettingsStack: 'settings',
             MyOrders: 'cart',
             Favourites: 'heart',
           };
@@ -31,7 +31,7 @@ export default function MainTabNavigator() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="MyOrders" component={MyOrders} />
       <Tab.Screen name="Favourites" component={Favourites} />
-      <Tab.Screen name="Settings" component={SettingsStack} />
+      <Tab.Screen name="SettingsStack" component={SettingsStack} />
      
       
     </Tab.Navigator>

@@ -8,6 +8,7 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useFonts } from "expo-font";
@@ -20,9 +21,10 @@ const EditProfile = () => {
   });
   return (
     <KeyboardAvoidingView
-      behaviour={Platform.OS === "ios" ? "position" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1, backgroundColor:'#ffffff' }}
     >
+       <Pressable onPress={Keyboard.dismiss}>
       <View style={styles.heading}>
         <Text style={{ fontSize: width * 0.055, fontFamily: "Baloo2-Medium" }}>
           Edit Profile
@@ -71,6 +73,7 @@ const EditProfile = () => {
         </Pressable>
         </View>
       </View>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 };
