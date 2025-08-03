@@ -6,7 +6,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import layout from "../app/layout";
 const { height, width } = Dimensions.get("window");
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -19,27 +19,30 @@ const Tab = createBottomTabNavigator();
 
 const Home = () => {
   useFonts({
-      "Baloo2-Bold": require("../assets/fonts/Baloo2-Bold.ttf"),
-      "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
-      "Baloo2-Regular": require("../assets/fonts/Baloo2-Regular.ttf"),
-    });
-    const BaseURL="http://192.168.1.5:3000"
-    const getData =async ()=>{
-      try{
-      const token = await AsyncStorage.getItem('isLoggedIN')
-     const response= await axios.get(`${BaseURL}/getUsername`,{
-      headers:{
-        Authorization: `Bearer ${token}`
-      }}
-     )
-      const {message}=response.data;
-      return message;
-      }catch(error){
-        console.log(error)
-      }
-    }
+    "Baloo2-Bold": require("../assets/fonts/Baloo2-Bold.ttf"),
+    "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
+    "Baloo2-Regular": require("../assets/fonts/Baloo2-Regular.ttf"),
+  });
+  const BaseURL = "http://192.168.1.5:3000";
 
-    const UserName=useEffect(()=>{getData()},[])
+  //here is the issue
+  const [Username, setUsername] = useState("");
+  const getData = async () => {
+    try {
+      const userEmail = await AsyncStorage.getItem("UserEmail");
+      const response = await axios.post(`${BaseURL}/getUsername`, {
+        email: userEmail,
+      });
+      const { finalUsername } = response.data;
+      setUsername(finalUsername);
+    } catch (error) {
+      console.log(await AsyncStorage.getItem("UserEmail"));
+      console.log("Error is: ", error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -47,7 +50,7 @@ const Home = () => {
           source={require("../assets/images/pfp.jpg")}
           style={styles.image}
         />
-        <Text style={styles.name}>Hi, {UserName}</Text>
+        <Text style={styles.name}>Hi, {Username}</Text>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -69,7 +72,7 @@ const Home = () => {
               source={require("../assets/images/new_arrival.jpg")}
               style={styles.itemImage}
             />
-            <View style={styles.itemTextContainer} >
+            <View style={styles.itemTextContainer}>
               <Text style={styles.itemText}>Side Hand Bag</Text>
               <Text style={styles.itemBrand}>Gucci</Text>
               <Text style={styles.itemText}>RS 120000</Text>
@@ -171,11 +174,7 @@ const Home = () => {
           </View>
         </View>
       </ScrollView>
-
-      
-      
     </View>
-    
   );
 };
 

@@ -129,24 +129,20 @@ app.post("/handleVerification", async (req, res) => {
     return res.status(500).json({ message: "Something went wrong", error });
   }
 });
-app.get("/getUsername", async (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ message: "No token" });
+//Here is the issue
+app.post("/getUsername", async (req, res) => {
+  const {email} = req.body;
+  if (!email) {
+    return res.status(401).json({ message: "User not found" });
   }
-  const token = authHeader.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
-
-    // Load from DB by userId
     const data = fs.readFileSync("Data.json", "utf-8");
     const parsedData = JSON.parse(data);
-    const user = parsedData.find((u) => u.id === userId); // assuming it's an array of users
-
+    const user = parsedData.find((u) => u.email === email); // assuming it's an array of users
+    const finalUsername= user.username
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    return res.status(200).json({ message: user.username });
+    return res.status(200).json({finalUsername});
   } catch (error) {
     return res.status(403).json({ message: "Invalid token" });
   }
