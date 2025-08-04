@@ -43,7 +43,7 @@ const Language = () => {
             setselectedLanguage(itemValue);
           }}
         >
-          <Picker.Item label="Englsih" value="english" />
+          <Picker.Item label="English" value="english"  />
           <Picker.Item label="Spanish" value="spanish" />
           <Picker.Item label="Japanese" value="japanese" />
           <Picker.Item label="French" value="french" />

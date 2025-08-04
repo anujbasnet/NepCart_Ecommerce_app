@@ -39,7 +39,6 @@ const postdata = async () => {
       password: Password,
     });
     const{message}=response.data;
-    await AsyncStorage.setItem("UserEmail",Email);
     setUsername("");
     setEmail(""); 
     setPassword("");

@@ -7,5 +7,14 @@
     "code": null,
     "expiresAt": null,
     "isVerified": true
+  },
+  {
+    "username": "Sans",
+    "email": "sans13560@gmail.com",
+    "password": "$2b$10$hZF70j22RSEUgdnqT7RvlOgcUV0De4FLobFuq5zAZWfz.tG3fb5yW",
+    "id": 2,
+    "code": null,
+    "expiresAt": null,
+    "isVerified": true
   }
 ]

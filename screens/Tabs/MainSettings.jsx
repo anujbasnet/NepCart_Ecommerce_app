@@ -6,8 +6,9 @@ import {
   StatusBar,
   ScrollView,
   Pressable,
+  Modal
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import Octicons from "@expo/vector-icons/Octicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -28,6 +29,7 @@ const Settings = () => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem("isLoggedIN");
   };
+  const [modalVisible, setmodalVisible] = useState(false)
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
@@ -256,13 +258,17 @@ const Settings = () => {
         </View>
         </Pressable>
         <View style={styles.profileEdit}>
+          <Modal>
+
+            <Text>Hello</Text>
+          </Modal>
           <Pressable
             style={[{
               marginLeft: width * 0.05,
               flexDirection: "row",
               gap: width * 0.03,
             }]}
-            onPress={handleLogout}
+            onPress={setmodalVisible(true)}
           >
             <MaterialIcons
               name="logout"

@@ -11,21 +11,19 @@ import layout from "../app/layout";
 const { height, width } = Dimensions.get("window");
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import Settings from "./Tabs/Settings";
+import Settings from "./Tabs/MainSettings";
 import { useFonts } from "expo-font";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const Tab = createBottomTabNavigator();
 
 const Home = () => {
-  useFonts({
+const [fontsLoaded]=  useFonts({
     "Baloo2-Bold": require("../assets/fonts/Baloo2-Bold.ttf"),
     "Baloo2-Medium": require("../assets/fonts/Baloo2-Medium.ttf"),
     "Baloo2-Regular": require("../assets/fonts/Baloo2-Regular.ttf"),
   });
   const BaseURL = "http://192.168.1.5:3000";
-
-  //here is the issue
   const [Username, setUsername] = useState("");
   const getData = async () => {
     try {
@@ -43,6 +41,10 @@ const Home = () => {
   useEffect(() => {
     getData();
   }, []);
+  
+  if (!fontsLoaded) {
+  return null;
+}
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>

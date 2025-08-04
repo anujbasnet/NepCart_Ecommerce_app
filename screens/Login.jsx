@@ -45,7 +45,9 @@ const Login = ({ navigation }) => {
       console.log("Login successful:", JSON.stringify(response.data));
       const { token } = response.data;
       if (token) {
-        await AsyncStorage.setItem("isLoggedIN", JSON.stringify(token)); // Save token to AsyncStorage
+        await AsyncStorage.setItem("isLoggedIN", JSON.stringify(token));
+        await AsyncStorage.setItem("UserEmail",Email); 
+        // Save token to AsyncStorage
       } else {
         alert("Login failed: token not received");
       }
