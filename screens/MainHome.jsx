@@ -161,8 +161,6 @@ const Home = () => {
         <Text style={styles.name}>New Arrivals</Text>
         <Text style={styles.nextName}>See All</Text>
       </View>
-
-      {/* Here I am working on Dynamic route*/}
       <FlatList
         data={products}
         renderItem={renderItem}
