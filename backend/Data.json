@@ -1,17 +1,17 @@
 [
   {
-    "username": "Anuj",
-    "email": "anjbas123@gmail.com",
-    "password": "$2b$10$RMGw/zgT3nVqohhxkHw6vuHzCrCFXD/MR1T6Vdx1KHIz5pDnPiTJy",
-    "id": 1,
+    "username": "Sans",
+    "email": "sans13560@gmail.com",
+    "password": "$2b$10$hZF70j22RSEUgdnqT7RvlOgcUV0De4FLobFuq5zAZWfz.tG3fb5yW",
+    "id": 2,
     "code": null,
     "expiresAt": null,
     "isVerified": true
   },
   {
-    "username": "Sans",
-    "email": "sans13560@gmail.com",
-    "password": "$2b$10$hZF70j22RSEUgdnqT7RvlOgcUV0De4FLobFuq5zAZWfz.tG3fb5yW",
+    "username": "Anuj",
+    "email": "anjbas123@gmail.com",
+    "password": "$2b$10$bcH1CRPRe1w1DiK6sRVZnuzXFt6942kX76S4Mr8mHT3T6YQBCfL9u",
     "id": 2,
     "code": null,
     "expiresAt": null,

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Modal,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { useFonts } from "expo-font";
@@ -18,7 +19,7 @@ import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 const { width, height } = Dimensions.get("window");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import {BlurView} from 'expo-blur';
+import { BlurView } from "expo-blur";
 
 const Settings = () => {
   const navigation = useNavigation();
@@ -271,7 +272,7 @@ const Settings = () => {
         </Pressable>
         <View style={styles.profileEdit}>
           <Modal
-            transparent
+            transparent={true}
             animationType="none"
             visible={modalVisible}
             onRequestClose={() => {
@@ -279,22 +280,30 @@ const Settings = () => {
               setmodalVisible(false);
             }}
           >
-            <BlurView intensity={10} tint="dark" style={styles.modalContainer}>
+            <View style={styles.fullScreenCentered}>
+              <BlurView
+                intensity={10}
+                tint="dark"
+                style={StyleSheet.absoluteFill}
+              />
+
               <View style={styles.modalView}>
                 <View>
-                  <Text style={styles.modalText}>Are you sure you want to </Text>
+                  <Text style={styles.modalText}>
+                    Are you sure you want to{" "}
+                  </Text>
                   <Text style={styles.modalText2}> logout?</Text>
                 </View>
-                <Pressable
-                  onPress={() => setmodalVisible(!modalVisible)}
+                <TouchableOpacity
+                  onPress={() => setmodalVisible(false)}
                   style={{
                     backgroundColor: "#6C5DD3",
-                    height:height*0.07,
-                    width:width*0.4,
-                    alignItems:'center',
-                    justifyContent:'center',
-                    borderRadius:width*0.1,
-                    marginTop:height*0.02
+                    height: height * 0.07,
+                    width: width * 0.4,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: width * 0.1,
+                    marginTop: height * 0.02,
                   }}
                 >
                   <Text
@@ -306,48 +315,50 @@ const Settings = () => {
                   >
                     Cancel
                   </Text>
-                </Pressable>
-                <Pressable onPress={handleLogout}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleLogout}>
                   <Text
                     style={{
                       fontFamily: "Baloo2-Medium",
                       fontSize: width * 0.05,
                       color: "red",
-                      
-                    marginTop:height*0.02
+                      marginTop: height * 0.02,
                     }}
                   >
                     Log Out
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
-            </BlurView>
+            </View>
           </Modal>
-          <Pressable
-            style={[
-              {
-                marginLeft: width * 0.05,
-                flexDirection: "row",
-                gap: width * 0.03,
-              },
-            ]}
-            onPress={() => setmodalVisible(true)}
-          >
-            <MaterialIcons
-              name="logout"
-              size={width * 0.05}
-              color="red"
-              style={{ marginTop: height * 0.003 }}
-            />
-            <Text
-              style={{
-                fontFamily: "Baloo2-Medium",
-                fontSize: width * 0.04,
-                color: "red",
-              }}
+          <Pressable onPress={() => setmodalVisible(true)}>
+            <View
+              style={[
+                {
+                  marginLeft: width * 0.05,
+                  flexDirection: "row",
+                  gap: width * 0.03,
+                  paddingRight: width * 0.7,
+                  paddingVertical: height * 0.03,
+                },
+              ]}
             >
-              Logout
-            </Text>
+              <MaterialIcons
+                name="logout"
+                size={width * 0.05}
+                color="red"
+                style={{ marginTop: height * 0.003 }}
+              />
+              <Text
+                style={{
+                  fontFamily: "Baloo2-Medium",
+                  fontSize: width * 0.04,
+                  color: "red",
+                }}
+              >
+                Logout
+              </Text>
+            </View>
           </Pressable>
         </View>
       </ScrollView>
@@ -378,10 +389,10 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: width * 0.05,
-    backfaceVisibility:'visible',
+    backfaceVisibility: "visible",
   },
   modalView: {
     width: width * 0.85,
@@ -407,5 +418,10 @@ const styles = StyleSheet.create({
     fontFamily: "Baloo2-Medium",
     fontSize: Math.min(width, height) * 0.045,
     textAlign: "center",
+  },
+  fullScreenCentered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
